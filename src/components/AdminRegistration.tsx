@@ -5,6 +5,7 @@ import Heading from "./Heading";
 import InputField from "./InputField";
 import { handleChange } from "../utils/helper";
 import { signUpUserWithEmailPass } from "../data/Auth";
+import { sendSignInLinkToEmail , getAuth } from "firebase/auth";
 
 export default function AdminRegistration() {
   const [adminForm, setAdminForm] = useState({
@@ -17,6 +18,45 @@ export default function AdminRegistration() {
 
   const navigate = useNavigate();
 
+
+   
+
+  const actionCodeSettings = {
+    // URL you want to redirect back to. The domain (www.example.com) for this
+    // URL must be in the authorized domains list in the Firebase Console.
+    url: 'http://localhost:1234/dashboard',
+    // This must be true.
+    handleCodeInApp: true,
+    iOS: {
+      bundleId: 'com.example.ios'
+    },
+    android: {
+      packageName: 'com.example.android',
+      installApp: true,
+      minimumVersion: '12'
+    },
+    dynamicLinkDomain: 'unqueue.page.link'
+  };
+
+function verifyEmail(email : string) {
+const auth = getAuth();
+sendSignInLinkToEmail(auth, email, actionCodeSettings)
+  .then(() => {
+    // The link was successfully sent. Inform the user.
+    // Save the email locally so you don't need to ask the user for it again
+    // if they open the link on the same device.
+    window.localStorage.setItem('emailForSignIn', email);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode,errorMessage)
+  });
+}
+
+
+
   return (
     <div className="flex flex-col items-center p-10">
       <Heading heading="Admin Registration" />
@@ -26,7 +66,9 @@ export default function AdminRegistration() {
         onSubmit={(e) => {
           if (adminForm.password === adminForm.ConfirmPassword) {
             signUpUserWithEmailPass(adminForm.email, adminForm.password);
+            verifyEmail(adminForm.email)
             navigate("/emailsent");
+
           } else {
             // Show an error message or alert to the user
             alert("Password and Confirm Password must be same.");
