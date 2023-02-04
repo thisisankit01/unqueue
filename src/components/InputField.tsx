@@ -8,6 +8,7 @@ export default function InputField({
   name,
   type,
   minLength,
+  autoComplete,
 }) {
   return (
     <label className="flex flex-col p-4">
@@ -20,6 +21,8 @@ export default function InputField({
         name={name}
         type={type}
         minLength={minLength}
+        required
+        autoComplete={autoComplete}
       />
     </label>
   );

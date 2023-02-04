@@ -3,10 +3,10 @@ import React from "react";
 import ButtonCTA from "./ButtonCTA";
 import Heading from "./Heading";
 import { Link } from "react-router-dom";
-import { addData } from "../data/addData";
 
 export default function HomePage() {
-  // addData();
+  // const user = signInUserWithEmailPass("yg@yg.com", "qwertyui");
+  // console.log(user);
   return (
     <div className="flex flex-col items-center p-10 ">
       <Heading heading="What is UnQueue?" />

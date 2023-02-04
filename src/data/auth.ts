@@ -6,7 +6,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import dotenv from "dotenv";
+dotenv.config();
 
 const firebaseConfig = {
   apiKey: "AIzaSyCbf2VhleTZS_ma0c2gK_jl0ojoCF_CCaA",
@@ -23,11 +24,11 @@ const firebaseConfig = {
 const fireApp = initializeApp(firebaseConfig);
 const auth = getAuth(fireApp);
 
+export { auth };
 export async function signInUserWithEmailPass(email: string, password: string) {
-  console.log("sigin func");
-  await signInWithEmailAndPassword(auth, email, password)
+  console.log("sigin func called");
+  return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in
       const user = userCredential.user;
       console.log(user);
       return user;
@@ -44,7 +45,7 @@ export async function signUpUserWithEmailPass(email: string, password: string) {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      console.log(user);
+      return user;
     })
     .catch((error) => {
       const errorCode = error.code;

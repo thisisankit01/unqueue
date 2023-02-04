@@ -63,7 +63,7 @@ sendSignInLinkToEmail(auth, email, actionCodeSettings)
       <form
         className="flex flex-col space-y-4 py-10"
         method="POST"
-        onSubmit={(e) => {
+        onSubmit={() => {
           if (adminForm.password === adminForm.ConfirmPassword) {
             signUpUserWithEmailPass(adminForm.email, adminForm.password);
             verifyEmail(adminForm.email)
@@ -83,6 +83,7 @@ sendSignInLinkToEmail(auth, email, actionCodeSettings)
           name="orgName"
           type="text"
           minLength=""
+          autoComplete="organisation-name"
         />
 
         <InputField
@@ -93,6 +94,7 @@ sendSignInLinkToEmail(auth, email, actionCodeSettings)
           name="email"
           type="email"
           minLength=""
+          autoComplete="email-id"
         />
         {/* <div className="flex "> */}
         <InputField
@@ -103,7 +105,7 @@ sendSignInLinkToEmail(auth, email, actionCodeSettings)
           name="password"
           type="password"
           minLength="8"
-
+          autoComplete="new-password"
           // type={showPassword ? "text" : "password"}
         />
         {/* <button
@@ -123,6 +125,7 @@ sendSignInLinkToEmail(auth, email, actionCodeSettings)
           name="ConfirmPassword"
           type="password"
           minLength="8"
+          autoComplete="confirm-password"
         />
         <ButtonCTA text="Register" />
       </form>

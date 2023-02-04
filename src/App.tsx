@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Domains from "./components/Domains";
 import Navbar from "./components/Navbar";
@@ -17,7 +17,6 @@ import AdminVerification from "./components/AdminVerificationPage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -25,7 +24,6 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       console.log(user);
       if (user === null) {
-        console.log(user);
         navigate("/");
       }
     });
