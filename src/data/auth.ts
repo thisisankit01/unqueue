@@ -26,20 +26,25 @@ const fireApp = initializeApp(firebaseConfig);
 const auth = getAuth(fireApp);
 
 export async function signInUserWithEmailPass(email: string, password: string) {
-  console.log("sigin func");
-  await signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      console.log(user);
-      return user;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorMessage, errorCode);
-    });
-}
+  const auth = getAuth();
+ await signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    const isEmailVerified = user.emailVerified
+    console.log(isEmailVerified);  
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode,errorMessage);
+  });
+  }
+
+
+
+
+
 
 export async function signUpUserWithEmailPass(email: string, password: string) {
   await createUserWithEmailAndPassword(auth, email, password)

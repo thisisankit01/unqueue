@@ -4,8 +4,7 @@ import Heading from "./Heading";
 import InputField from "./InputField";
 import ButtonCTA from "./ButtonCTA";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, signInUserWithEmailPass } from "../data/Auth";
+import { signInWithEmailAndPassword , getAuth} from "firebase/auth";
 
 export default function LoginPage() {
   const [loginForm, setLoginForm] = useState({
@@ -15,19 +14,43 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
 
+
+
+   async function signInUserWithEmailPass(email: string, password: string) {
+    const auth = getAuth();
+   await signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      const isEmailVerified = user.emailVerified
+      console.log(isEmailVerified);  
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode,errorMessage);
+    });
+    }
+
+
+
   return (
     <div className="flex flex-col items-center p-10">
       <Heading heading="Login" />
       <form
         className="flex flex-col space-y-4 py-10"
-        method="POST"
-        onSubmit={() => {
-          let user = signInUserWithEmailPass(
-            loginForm.email,
-            loginForm.password
-          );
-          console.log(user);
-          navigate("/dashboard");
+        onSubmit={async () => {
+          try {
+            let user = await signInUserWithEmailPass(
+              loginForm.email,
+              loginForm.password  
+            );
+            console.log(user);
+            navigate("/dashboard");
+          } catch (error) {
+            console.error(error);
+            alert(error.message);
+          }
         }}
       >
         <InputField
