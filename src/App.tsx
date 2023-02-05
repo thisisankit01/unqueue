@@ -20,15 +20,6 @@ function App() {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      console.log(user);
-      if (user === null) {
-        navigate("/");
-      }
-    });
-  }, []);
-
   return (
     <>
       <Navbar />

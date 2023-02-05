@@ -4,7 +4,7 @@ import Heading from "./Heading";
 import InputField from "./InputField";
 import ButtonCTA from "./ButtonCTA";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword , getAuth} from "firebase/auth";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 
 export default function LoginPage() {
   const [loginForm, setLoginForm] = useState({
@@ -13,44 +13,33 @@ export default function LoginPage() {
   });
 
   const navigate = useNavigate();
-
-
-
-   async function signInUserWithEmailPass(email: string, password: string) {
-    const auth = getAuth();
-   await signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      const isEmailVerified = user.emailVerified
-      console.log(isEmailVerified);  
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode,errorMessage);
-    });
-    }
-
-
+  const auth = getAuth();
 
   return (
     <div className="flex flex-col items-center p-10">
       <Heading heading="Login" />
       <form
         className="flex flex-col space-y-4 py-10"
+        method="POST"
         onSubmit={async () => {
-          try {
-            let user = await signInUserWithEmailPass(
-              loginForm.email,
-              loginForm.password  
-            );
-            console.log(user);
-            navigate("/dashboard");
-          } catch (error) {
-            console.error(error);
-            alert(error.message);
-          }
+          await signInWithEmailAndPassword(
+            auth,
+            loginForm.email,
+            loginForm.password
+          )
+            .then((userCredential) => {
+              console.log("called ");
+              const user = userCredential.user;
+              console.log(user);
+              navigate("/dashboard");
+              return user;
+            })
+            .catch((error) => {
+              alert("Please check your email id or password");
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              console.log(errorMessage, errorCode);
+            });
         }}
       >
         <InputField
