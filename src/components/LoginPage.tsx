@@ -20,7 +20,7 @@ export default function LoginPage() {
       <Heading heading="Login" />
       <form
         className="flex flex-col space-y-4 py-10"
-        method="POST"
+        method="GET"
         onSubmit={async () => {
           await signInWithEmailAndPassword(
             auth,
@@ -28,7 +28,7 @@ export default function LoginPage() {
             loginForm.password
           )
             .then((userCredential) => {
-              console.log("called ");
+              console.log("called");
               const user = userCredential.user;
               console.log(user);
               navigate("/dashboard");
