@@ -20,15 +20,11 @@ export default function LoginPage() {
       <Heading heading="Login" />
       <form
         className="flex flex-col space-y-4 py-10"
-        method="GET"
-        onSubmit={async () => {
-          await signInWithEmailAndPassword(
-            auth,
-            loginForm.email,
-            loginForm.password
-          )
+        method="POST"
+        onSubmit={() => {
+          signInWithEmailAndPassword(auth, loginForm.email, loginForm.password)
             .then((userCredential) => {
-              console.log("called");
+              console.log("sigin called ");
               const user = userCredential.user;
               console.log(user);
               navigate("/dashboard");
@@ -36,10 +32,12 @@ export default function LoginPage() {
             })
             .catch((error) => {
               alert("Please check your email id or password");
+              navigate("/login");
               const errorCode = error.code;
               const errorMessage = error.message;
               console.log(errorMessage, errorCode);
             });
+          navigate("/dashboard");
         }}
       >
         <InputField

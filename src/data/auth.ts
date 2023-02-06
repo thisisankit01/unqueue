@@ -10,7 +10,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCbf2VhleTZS_ma0c2gK_jl0ojoCF_CCaA",
+  apiKey: `${process.env.API_KEY}`,
   authDomain: "unqueue-548b5.firebaseapp.com",
   databaseURL: "https://unqueue-548b5-default-rtdb.firebaseio.com",
   projectId: "unqueue-548b5",
@@ -22,7 +22,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const fireApp = initializeApp(firebaseConfig);
-const auth = getAuth(fireApp);
+export const auth = getAuth(fireApp);
 
 export const actionCodeSettings = {
   // URL you want to redirect back to. The domain (www.example.com) for this
@@ -41,9 +41,8 @@ export const actionCodeSettings = {
   dynamicLinkDomain: "unqueue.page.link",
 };
 
-export { auth };
 export async function signInUserWithEmailPass(email: string, password: string) {
-  console.log("sigin func called");
+  console.log("sigin function called");
   await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;

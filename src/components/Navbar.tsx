@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../images/logo unqueue.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { logOut } from "../data/Auth";
+import { logOut } from "../data/auth";
 
 export default function Navbar() {
   const currentRoute = useLocation();
@@ -13,6 +13,7 @@ export default function Navbar() {
         <img src={Logo} className="w-10" />
         <h1 className="font-semibold text-3xl px-3 text-gray-600">UnQueue</h1>
       </Link>
+
       {currentRoute.pathname === "/dashboard" && (
         <a
           onClick={() => {

@@ -3,12 +3,15 @@ import ButtonCTA from "./ButtonCTA";
 import Heading from "./Heading";
 import InputField from "./InputField";
 import { handleChange } from "../utils/helper";
-import { postQID } from "../utils/postForms";
+import { findValidUser } from "../utils/helper";
+import { addUserToQueue } from "../utils/helper";
+import { handleKeyDown } from "../utils/helper";
 
-export default function AvgWaitingTime() {
+export default function AvgWaitingTime({ dataFromAPI, setPeopleInQueue }) {
   const [QID, setQID] = useState({
     qidValue: "",
   });
+  const [errorMsg, setErrorMsg] = useState("");
 
   return (
     <div className="grid grid-cols justify-center ">
@@ -17,7 +20,7 @@ export default function AvgWaitingTime() {
         <h2 className="text-2xl text-center text-gray-600">10 mins / person</h2>
       </div>
 
-      <form className="pt-12 " onSubmit={(e) => postQID(e, QID)}>
+      <form className="pt-12 " onKeyDown={handleKeyDown}>
         <InputField
           label="QID of the User *"
           input="QID"
@@ -29,12 +32,22 @@ export default function AvgWaitingTime() {
           autoComplete=""
         />
 
-        <ButtonCTA text="Add User" />
+        <p className="text-red-600 p-3 font-semibold">{errorMsg}</p>
 
-        <h2 className=" p-10 text-lg font-semibold text-center">Or</h2>
+        {/* <h2 className=" p-10 text-lg font-semibold text-center">Or</h2>
 
-        <ButtonCTA text="Scan QR" />
+        <ButtonCTA text="Scan QR" /> */}
       </form>
+
+      <button
+        onClick={() => {
+          const validUser = findValidUser(dataFromAPI, QID, setErrorMsg);
+          addUserToQueue(setErrorMsg, setPeopleInQueue, validUser);
+        }}
+        className="px-48 py-5 rounded-md text-white font-semibold primary-color text-center hover:bg-sky-500 active:bg-sky-600"
+      >
+        Add User
+      </button>
     </div>
   );
 }
