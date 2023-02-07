@@ -28,7 +28,7 @@ export default function AvgWaitingTime({
   //   }
   // }
   return (
-    <div className="grid grid-cols justify-center ">
+    <div className="grid grid-cols justify-center max-h-72">
       <div className="flex flex-col justify-center">
         <Heading heading="Average Waiting Time" />
         <h2 className="text-2xl text-center text-gray-600">10 mins / person</h2>
