@@ -19,9 +19,11 @@ export default function Dashboard() {
         navigate("/");
       }
     });
-
-    fetchData(setDataFromAPI);
   }, []);
+
+  useEffect(() => {
+    fetchData(setDataFromAPI);
+  });
 
   return (
     <div className="grid grid-cols-2 pt-10">
@@ -29,7 +31,6 @@ export default function Dashboard() {
       <AvgWaitingTime
         dataFromAPI={dataFromAPI}
         setPeopleInQueue={setPeopleInQueue}
-        peopleInQueue={peopleInQueue}
       />
     </div>
   );
