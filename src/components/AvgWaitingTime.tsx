@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ButtonCTA from "./ButtonCTA";
 import Heading from "./Heading";
 import InputField from "./InputField";
 import { handleChange } from "../utils/helper";
