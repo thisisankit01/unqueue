@@ -4,11 +4,13 @@ import AvgWaitingTime from "./AvgWaitingTime";
 import PeopleInQueue from "./PeopleInQueue";
 import { auth } from "../data/auth";
 import { onAuthStateChanged } from "@firebase/auth";
+import { fetchData } from "../data/fetchData";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const [dataFromAPI, setDataFromAPI] = useState<object[]>([]);
   const [peopleInQueue, setPeopleInQueue] = useState<object[]>([]);
+  console.log(dataFromAPI);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -18,21 +20,7 @@ export default function Dashboard() {
       }
     });
 
-    //this data will be fetched from the api
-    let dataFetched: object[] = [
-      { name: "Yash Garg", qid: "HOS1234" },
-      { name: "Ankit Pandey", qid: "HOS1235" },
-      { name: "Aman Kumar", qid: "HOS1236" },
-      { name: "Shauryam Saxena", qid: "HOS1237" },
-      { name: "Shauryam Saxena", qid: "HOS1238" },
-      { name: "Shauryam Saxena", qid: "HOS1239" },
-      { name: "Shauryam Saxena", qid: "HOS1240" },
-      { name: "Shauryam Saxena", qid: "HOS1242" },
-    ];
-    // here write the logic for crud firebase
-    //ps: this is a dummy data
-
-    setDataFromAPI(dataFetched);
+    fetchData(setDataFromAPI);
   }, []);
 
   return (
@@ -41,6 +29,7 @@ export default function Dashboard() {
       <AvgWaitingTime
         dataFromAPI={dataFromAPI}
         setPeopleInQueue={setPeopleInQueue}
+        peopleInQueue={peopleInQueue}
       />
     </div>
   );

@@ -6,12 +6,27 @@ import { findValidUser } from "../utils/helper";
 import { addUserToQueue } from "../utils/helper";
 import { handleKeyDown } from "../utils/helper";
 
-export default function AvgWaitingTime({ dataFromAPI, setPeopleInQueue }) {
+export default function AvgWaitingTime({
+  dataFromAPI,
+  setPeopleInQueue,
+  peopleInQueue,
+}) {
   const [QID, setQID] = useState({
     qidValue: "",
   });
+  console.log(QID);
   const [errorMsg, setErrorMsg] = useState("");
 
+  // function checkRepeatedUser(peopleInQueue: object[], QID) {
+  //   for (let i = 0; i < peopleInQueue.length; i++) {
+  //     if (peopleInQueue[i].qid === QID.qidValue) {
+  //       [setErrorMsg("User already in queue")];
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+  // }
   return (
     <div className="grid grid-cols justify-center ">
       <div className="flex flex-col justify-center">
