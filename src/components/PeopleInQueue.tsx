@@ -39,7 +39,7 @@ export default function PeopleInQueue({ peopleInQueue }) {
                   }`}
             </span>
           </div>
-        </button>
+        </button> //ok
       )}
     </div>
   );
