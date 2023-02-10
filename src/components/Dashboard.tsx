@@ -26,8 +26,8 @@ export default function Dashboard() {
   });
 
   return (
-    <div className="grid grid-cols-2 pt-10">
-      <PeopleInQueue peopleInQueue={peopleInQueue} />
+    <div className="grid grid-cols-2 pt-10 sm:grid sm:grid-rows-2">
+      <PeopleInQueue peopleInQueue={peopleInQueue}/>
       <AvgWaitingTime
         dataFromAPI={dataFromAPI}
         setPeopleInQueue={setPeopleInQueue}
